@@ -1,0 +1,67 @@
+<!-- api = https://goweather.herokuapp.com/weather/{city} -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+
+<style>
+    .text-center{
+        text-align: center;
+    }
+    .container{
+        border: 2px solid red;
+        width: 60%;
+        height: 60vh;
+        /* align-items: center; */
+        margin: auto;
+        text-align: center;
+        justify-content: center;
+    }
+
+</style>
+<body>
+    <h1 class="text-center">Weather App</h1>
+
+    <div class="container" id="weather">
+        <form >
+            <label for="search">Enter the state:</label>
+        <input id="search" type="text">
+    </form>
+        <h2 id="data"></h2>
+        <p id="description"></p>
+
+    </div>
+</body>
+<script>
+    let weather = document.getElementById("weather");
+    let search = document.getElementById("search");
+    let data = document.getElementById("data");
+    let description = data.nextElementSibling;
+    let form = document.querySelector("form");
+
+    const getWeather = async(city) =>{
+        let url = `https://goweather.herokuapp.com/weather/${city}`;
+        // let url = `https://goweather.herokuapp.com/weather/ny`;
+        const response = await fetch(url);
+        const data1 = await response.json();
+        console.log(data1);
+        data.innerHTML = data1.temperature;
+        description.innerHTML = data1.description;
+
+    }
+
+    form.addEventListener("submit",(event) =>{
+        event.preventDefault();
+        // console.log(search.value)
+        getWeather(search.value);
+        
+    })
+
+
+</script>
+</html>
